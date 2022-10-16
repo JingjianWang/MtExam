@@ -1,0 +1,42 @@
+---
+title: "exam"
+author: "Jingjian Wang"
+date: '2022-10-16'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1.  open libraries
+
+```{r, message=FALSE}
+pacman::p_load(haven, tidyverse, naniar, VIM, mice, lattice, table1, car)
+```
+
+2.  a) import data
+
+```{r, message=FALSE}
+tit<-read_csv("book3.csv")
+```
+2. b) determine median by Pclass
+```{r}
+tit <- tit %>%
+  mutate(Pclass = as.factor(Pclass)) 
+
+table1(~ Age | Pclass,
+       render.continuous = c(. = "Median (IQR)"),
+       data = tit,
+       caption = "Age grouped by Passenger class")
+```
+
+2. c) plot
+```{r}
+tit %>%
+ggplot(aes(x = Pclass, y = Age)) +
+  geom_boxplot() +
+  labs(x = "Passenger Class", y = "Age",  title = "Boxplot of Age by Pclass")
+```
