@@ -22,15 +22,16 @@ pacman::p_load(haven, tidyverse, naniar, VIM, mice, lattice, table1, car)
 ```{r, message=FALSE}
 tit<-read_csv("book3.csv")
 ```
-2. b) determine median by Pclass
+2. b) determine median of Age and percentage of Sex by Pclass
 ```{r}
 tit <- tit %>%
-  mutate(Pclass = as.factor(Pclass)) 
+  mutate(Pclass = as.factor(Pclass)) %>%
+  mutate(Sex = as.factor(Sex))
 
-table1(~ Age | Pclass,
+table1(~ Age + Sex | Pclass,
        render.continuous = c(. = "Median (IQR)"),
        data = tit,
-       caption = "Age grouped by Passenger class")
+       caption = "Age and Sex grouped by Passenger class")
 ```
 
 2. c) plot
